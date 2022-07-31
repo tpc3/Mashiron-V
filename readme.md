@@ -1,6 +1,11 @@
 # Mashiron-V ✌
 
-<img src="./mashiron.png" width="50">
+[![Docker Image CI](https://github.com/tpc3/Mashiron-V/actions/workflows/docker-image.yml/badge.svg)](https://github.com/tpc3/Mashiron-V/actions/workflows/docker-image.yml)
+[![Go](https://github.com/tpc3/Mashiron-V/actions/workflows/go.yml/badge.svg)](https://github.com/tpc3/Mashiron-V/actions/workflows/go.yml)
+
+<div style="text-align: center;">
+    <img src="./mashiron.png" width="100">
+</div>
 
 Advanced auto-reply bot, rewrite of the Mashiron-Fly with additional future.
 
