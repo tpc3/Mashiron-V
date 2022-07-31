@@ -27,6 +27,10 @@ func MessageCreate(session *discordgo.Session, orgMsg *discordgo.MessageCreate) 
 		}
 	}()
 
+	if orgMsg.Author.ID == session.State.User.ID || orgMsg.Content == "" {
+		return
+	}
+
 	msgInfo := embed.MsgInfo{
 		Session: session,
 		OrgMsg:  orgMsg,
@@ -41,10 +45,6 @@ func MessageCreate(session *discordgo.Session, orgMsg *discordgo.MessageCreate) 
 	data, err := db.LoadData(&orgMsg.GuildID)
 	if err != nil {
 		embed.SendUnknownErrorEmbed(&msgInfo, err)
-	}
-
-	if orgMsg.Author.ID == session.State.User.ID || orgMsg.Content == "" {
-		return
 	}
 
 	if strings.HasPrefix(orgMsg.Content, guild.Prefix) {
