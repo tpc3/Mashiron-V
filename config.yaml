@@ -1,0 +1,13 @@
+debug: true
+help: https://github.com/tpc3/Mashiron-V/wiki
+data: ./data/
+config: ./config/
+discord:
+  token: 
+  status: "Mashiron-V is running! | .help"
+guild:
+  prefix: m.
+  lang: japanese
+js:
+  enabled: true
+  timeout: 500 # ms
