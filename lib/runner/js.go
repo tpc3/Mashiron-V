@@ -56,7 +56,7 @@ func js(msgInfo *embed.MsgInfo, js string) (*string, error) {
 	if err != nil {
 		return nil, err
 	}
-	vm.Set("channel_isnsfw", channel.NSFW)
+	vm.Set("channel_isNsfw", channel.NSFW)
 	category, err := getCategory(msgInfo.Session, channel)
 	if err != nil {
 		return nil, err
