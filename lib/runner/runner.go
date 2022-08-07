@@ -36,7 +36,7 @@ func Run(def *db.Schema, msgInfo *embed.MsgInfo) error {
 			if len([]rune(v)) == 1 {
 				emoji = v
 			} else {
-				guildEmoji, err := msgInfo.Session.GuildEmoji(msgInfo.OrgMsg.GuildID, v)
+				guildEmoji, err := msgInfo.Session.State.Emoji(msgInfo.OrgMsg.GuildID, v)
 				if err != nil {
 					return err
 				}

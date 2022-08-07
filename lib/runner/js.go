@@ -52,7 +52,7 @@ func js(msgInfo *embed.MsgInfo, js string) (*string, error) {
 	}
 	vm.Set("author_id", msgInfo.OrgMsg.Author.ID)
 	vm.Set("author_avatar", msgInfo.OrgMsg.Author.Avatar)
-	channel, err := msgInfo.Session.Channel(msgInfo.OrgMsg.ChannelID)
+	channel, err := msgInfo.Session.State.Channel(msgInfo.OrgMsg.ChannelID)
 	if err != nil {
 		return nil, err
 	}
@@ -93,7 +93,7 @@ func js(msgInfo *embed.MsgInfo, js string) (*string, error) {
 }
 
 func getCategory(session *discordgo.Session, channel *discordgo.Channel) (*string, error) {
-	parentCh, err := session.Channel(channel.ParentID)
+	parentCh, err := session.State.Channel(channel.ParentID)
 	if err != nil {
 		return nil, err
 	}
