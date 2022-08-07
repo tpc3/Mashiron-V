@@ -54,7 +54,10 @@ func js(msgInfo *embed.MsgInfo, js string) (*string, error) {
 	vm.Set("author_avatar", msgInfo.OrgMsg.Author.Avatar)
 	channel, err := msgInfo.Session.State.Channel(msgInfo.OrgMsg.ChannelID)
 	if err != nil {
-		return nil, err
+		channel, err = msgInfo.Session.Channel(msgInfo.OrgMsg.ChannelID)
+		if err != nil {
+			return nil, err
+		}
 	}
 	vm.Set("channel_isNsfw", channel.NSFW)
 	category, err := getCategory(msgInfo.Session, channel)
@@ -95,7 +98,10 @@ func js(msgInfo *embed.MsgInfo, js string) (*string, error) {
 func getCategory(session *discordgo.Session, channel *discordgo.Channel) (*string, error) {
 	parentCh, err := session.State.Channel(channel.ParentID)
 	if err != nil {
-		return nil, err
+		parentCh, err = session.Channel(channel.ParentID)
+		if err != nil {
+			return nil, err
+		}
 	}
 	if parentCh.Type == discordgo.ChannelTypeGuildCategory {
 		return &parentCh.ID, nil
