@@ -42,6 +42,7 @@ func js(msgInfo *embed.MsgInfo, js string) (*string, error) {
 		program = cached.(*goja.Program)
 	}
 
+	vm.Set("rawMsg", msgInfo.OrgMsg.Content)
 	vm.Set("scriptArgs", strings.Split(msgInfo.OrgMsg.Content, " "))
 	vm.Set("name", msgInfo.OrgMsg.Author.Username)
 	vm.Set("nickname", msgInfo.OrgMsg.Member.Nick)
