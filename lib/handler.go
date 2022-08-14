@@ -27,7 +27,7 @@ func MessageCreate(session *discordgo.Session, orgMsg *discordgo.MessageCreate) 
 		}
 	}()
 
-	if orgMsg.Author.ID == session.State.User.ID || orgMsg.Content == "" {
+	if orgMsg.Author.ID == session.State.User.ID || orgMsg.Content == "" || (orgMsg.Type != discordgo.MessageTypeDefault && orgMsg.Type != discordgo.MessageTypeReply) {
 		return
 	}
 

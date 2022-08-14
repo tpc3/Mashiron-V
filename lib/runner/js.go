@@ -107,7 +107,7 @@ func getCategory(session *discordgo.Session, channel *discordgo.Channel) (*strin
 	if parentCh.Type == discordgo.ChannelTypeGuildCategory {
 		return &parentCh.ID, nil
 	} else {
-		return getCategory(session, channel)
+		return getCategory(session, parentCh)
 	}
 }
 
