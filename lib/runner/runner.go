@@ -1,14 +1,17 @@
 package runner
 
 import (
+	"Mashiron-V/lib/config"
 	"Mashiron-V/lib/db"
 	"Mashiron-V/lib/embed"
 	"Mashiron-V/lib/utils"
+	"errors"
 	"math/rand"
 	"regexp"
 	"strconv"
 	"time"
 
+	"github.com/bwmarrin/discordgo"
 	"github.com/patrickmn/go-cache"
 )
 
@@ -38,13 +41,11 @@ func Run(def *db.Schema, msgInfo *embed.MsgInfo) error {
 			} else {
 				guildEmoji, err := msgInfo.Session.State.Emoji(msgInfo.OrgMsg.GuildID, v)
 				if err != nil {
-					guildEmoji, err = msgInfo.Session.GuildEmoji(msgInfo.OrgMsg.GuildID, v)
-					if err != nil {
+					if errors.Is(err, discordgo.ErrStateNotFound) {
+						return embed.SendErrorEmbed(msgInfo, config.Lang[msgInfo.Lang].Error.NoEmoji+": `"+v+"`")
+					} else {
 						return err
 					}
-				}
-				if err != nil {
-					return err
 				}
 				emoji = guildEmoji.Name + ":" + guildEmoji.ID
 			}
