@@ -28,7 +28,7 @@ func init() {
 		log.Fatal("Discordgo late init failure:", err)
 	}
 	discord.AddHandler(func(s *discordgo.Session, m *discordgo.MessageCreate) { go lib.MessageCreate(s, m) })
-	discord.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsGuildVoiceStates
+	discord.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentGuildEmojis | discordgo.IntentsGuildMessages | discordgo.IntentsGuildVoiceStates
 }
 
 func main() {
