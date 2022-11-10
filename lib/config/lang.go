@@ -21,6 +21,7 @@ type errorstr struct {
 	ZeroEntry  string
 	NoEntry    string
 	Invalid    string
+	NoEmoji    string
 }
 
 var (
@@ -45,6 +46,7 @@ func loadLang() {
 			ZeroEntry:  "登録されているコマンドが無いため、結果を表示できません。",
 			NoEntry:    "そのようなコマンドはありません。",
 			Invalid:    "コマンドの形式が不正です。",
+			NoEmoji:    "絵文字が見つかりません。",
 		},
 	}
 	Lang["english"] = Strings{
@@ -63,6 +65,7 @@ func loadLang() {
 			ZeroEntry:  "Cannot show results since there's no registered command.",
 			NoEntry:    "There's no such command.",
 			Invalid:    "Invalid command.",
+			NoEmoji:    "Emoji not found.",
 		},
 	}
 }
