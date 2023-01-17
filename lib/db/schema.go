@@ -18,7 +18,7 @@ type Schema struct {
 		Content []string `yaml:",omitempty"`
 		Uid     []uint64 `yaml:",omitempty"`
 	} `yaml:",omitempty"`
-	ReturnStr []string `yaml:"return,omitempty"`
+	ReturnStr []string `yaml:"return,omitempty" toml:"return" json:"return"`
 	React     []string `yaml:",omitempty"`
 	Js        string   `yaml:",omitempty"`
 }

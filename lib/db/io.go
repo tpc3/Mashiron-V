@@ -22,7 +22,7 @@ func LoadData(id *string) (*map[string]*Schema, error) {
 		return nil, err
 	}
 
-	data, err := ToYaml(&file, true)
+	data, err := ParseData(FileLangYaml, &file, true)
 	if err != nil {
 		return nil, err
 	}
