@@ -5,7 +5,6 @@ import (
 	"Mashiron-V/lib/db"
 	"Mashiron-V/lib/embed"
 	"bytes"
-	"io/ioutil"
 	"os"
 	"strings"
 
@@ -33,7 +32,7 @@ func ListCmd(msgInfo *embed.MsgInfo, data *map[string]*db.Schema) {
 			embed.SendUnknownErrorEmbed(msgInfo, err)
 		}
 	} else {
-		file, err = ioutil.ReadFile(config.CurrentConfig.Data + msgInfo.OrgMsg.GuildID + ".yaml")
+		file, err = os.ReadFile(config.CurrentConfig.Data + msgInfo.OrgMsg.GuildID + ".yaml")
 		if os.IsNotExist(err) {
 			err = embed.SendErrorEmbed(msgInfo, config.Lang[msgInfo.Lang].Error.ZeroEntry)
 			if err != nil {
