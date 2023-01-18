@@ -2,7 +2,6 @@ package config
 
 import (
 	"errors"
-	"io/ioutil"
 	"log"
 	"os"
 	"time"
@@ -45,7 +44,7 @@ var (
 
 func init() {
 	loadLang()
-	file, err := ioutil.ReadFile(configFile)
+	file, err := os.ReadFile(configFile)
 	if err != nil {
 		log.Fatal("Config load failed: ", err)
 	}
@@ -90,7 +89,7 @@ func LoadGuild(id *string) (*Guild, error) {
 	if err != nil {
 		return nil, err
 	}
-	file, err := ioutil.ReadFile(CurrentConfig.Config + *id + ".yaml")
+	file, err := os.ReadFile(CurrentConfig.Config + *id + ".yaml")
 	if os.IsNotExist(err) {
 		return &Guild{
 			Prefix: CurrentConfig.Guild.Prefix,
@@ -123,7 +122,7 @@ func SaveGuild(id *string, guild *Guild) error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(CurrentConfig.Config+*id+".yaml", data, 0666)
+	err = os.WriteFile(CurrentConfig.Config+*id+".yaml", data, 0666)
 	if err != nil {
 		return err
 	}

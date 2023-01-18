@@ -2,7 +2,6 @@ package db
 
 import (
 	"Mashiron-V/lib/config"
-	"io/ioutil"
 	"os"
 
 	"github.com/goccy/go-yaml"
@@ -15,7 +14,7 @@ func LoadData(id *string) (*map[string]*Schema, error) {
 		return val.(*map[string]*Schema), nil
 	}
 
-	file, err := ioutil.ReadFile(config.CurrentConfig.Data + *id + ".yaml")
+	file, err := os.ReadFile(config.CurrentConfig.Data + *id + ".yaml")
 	if os.IsNotExist(err) {
 		return &map[string]*Schema{}, nil
 	} else if err != nil {
@@ -43,7 +42,7 @@ func SaveData(id *string, def *map[string]*Schema) error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(config.CurrentConfig.Data+*id+".yaml", data, os.ModePerm)
+	err = os.WriteFile(config.CurrentConfig.Data+*id+".yaml", data, os.ModePerm)
 	if err != nil {
 		return err
 	}
