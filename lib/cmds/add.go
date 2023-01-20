@@ -13,8 +13,24 @@ const Add = "add"
 
 func AddCmd(msgInfo *embed.MsgInfo, data *map[string]*db.Schema) {
 	lines := strings.Split(msgInfo.OrgMsg.Content, "\n")
-	if len(lines) < 4 || (lines[1] != "```yaml" && lines[1] != "```yml") || lines[len(lines)-1] != "```" {
+	if len(lines) < 4 || !strings.HasPrefix(lines[1], "```") || lines[len(lines)-1] != "```" {
 		err := embed.SendErrorEmbed(msgInfo, config.Lang[msgInfo.Lang].Error.Invalid)
+		if err != nil {
+			embed.SendUnknownErrorEmbed(msgInfo, err)
+		}
+		return
+	}
+
+	var lang db.FileLang
+	switch lines[1][3:] {
+	case "yaml", "yml":
+		lang = db.FileLangYaml
+	case "toml":
+		lang = db.FileLangToml
+	case "json":
+		lang = db.FileLangJson
+	default:
+		err := embed.SendErrorEmbed(msgInfo, config.Lang[msgInfo.Lang].Error.InvalidLang)
 		if err != nil {
 			embed.SendUnknownErrorEmbed(msgInfo, err)
 		}
@@ -31,7 +47,7 @@ func AddCmd(msgInfo *embed.MsgInfo, data *map[string]*db.Schema) {
 	}
 
 	input := []byte(strings.Join(lines[2:len(lines)-1], "\n"))
-	res, err := db.ToYaml(&input, flex)
+	res, err := db.ParseData(lang, &input, flex)
 	if err != nil {
 		embed.SendErrorEmbed(msgInfo, "```\n"+err.Error()+"```")
 		return
