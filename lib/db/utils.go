@@ -66,7 +66,7 @@ func unmarshal(lang FileLang, file []byte, result any) error {
 	}
 }
 
-func Marge(from *map[string]*Schema, to *map[string]*Schema) *map[string]*Schema {
+func Merge(from *map[string]*Schema, to *map[string]*Schema) *map[string]*Schema {
 	for k, v := range *from {
 		(*to)[k] = v
 	}

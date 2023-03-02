@@ -89,7 +89,7 @@ func AddCmd(msgInfo *embed.MsgInfo, data *map[string]*db.Schema) {
 		}
 	}
 
-	db.Marge(res, data)
+	db.Merge(res, data)
 	err = db.SaveData(&msgInfo.OrgMsg.GuildID, data)
 	if err != nil {
 		embed.SendUnknownErrorEmbed(msgInfo, err)
