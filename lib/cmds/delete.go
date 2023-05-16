@@ -11,6 +11,10 @@ const Delete = "delete"
 
 func DeleteCmd(msgInfo *embed.MsgInfo, data *map[string]*db.Schema) {
 	split := strings.Split(msgInfo.OrgMsg.Content, " ")
+	if len(split) < 2 {
+		embed.SendErrorEmbed(msgInfo, config.Lang[msgInfo.Lang].Error.Invalid)
+		return
+	}
 	for _, v := range split[1:] {
 		_, exists := (*data)[v]
 		if !exists {
