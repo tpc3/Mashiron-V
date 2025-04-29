@@ -23,10 +23,17 @@ func init() {
 
 func Run(def *db.Schema, msgInfo *embed.MsgInfo) error {
 	rand.Seed(msgInfo.OrgMsg.Timestamp.UnixNano())
+	reply := &discordgo.MessageSend{}
+	reply.Reference = msgInfo.OrgMsg.Reference()
+	reply.AllowedMentions = &discordgo.MessageAllowedMentions{
+		RepliedUser: false,
+	}
+
 	if def.ReturnStr != nil && len(def.ReturnStr) != 0 {
 		v := def.ReturnStr[rand.Intn(len(def.ReturnStr))]
 		if v != "" {
-			_, err := msgInfo.Session.ChannelMessageSendReply(msgInfo.OrgMsg.ChannelID, v, msgInfo.OrgMsg.Reference())
+			reply.Content = v
+			_, err := msgInfo.Session.ChannelMessageSendComplex(msgInfo.OrgMsg.ChannelID, reply)
 			if err != nil {
 				return err
 			}
@@ -64,7 +71,8 @@ func Run(def *db.Schema, msgInfo *embed.MsgInfo) error {
 			}
 		} else {
 			if str != nil && *str != "" {
-				msgInfo.Session.ChannelMessageSendReply(msgInfo.OrgMsg.ChannelID, *str, msgInfo.OrgMsg.Reference())
+				reply.Content = *str
+				msgInfo.Session.ChannelMessageSendComplex(msgInfo.OrgMsg.ChannelID, reply)
 			}
 		}
 	}
